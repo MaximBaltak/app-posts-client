@@ -19,7 +19,7 @@
         v-model="password"
         bg-color="white"
         :type="show ? 'text':'password'"
-        label="Пороль"
+        label="Пароль"
         :counter="8"
         required
       ></v-text-field>
