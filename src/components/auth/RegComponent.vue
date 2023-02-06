@@ -1,7 +1,10 @@
 <template>
-  <v-form class="form" @click.prevent>
+  <v-form ref="form" class="form" @click.prevent>
     <v-row class="mt-10 d-flex justify-center align-center">
       <h1 class="form_title mb-10">Регистрация</h1>
+    </v-row>
+    <v-row v-if="error" class="mt-10 mb-10 d-flex justify-center align-center">
+      <p style="font-size: 20px; font-weight: 500; color: red" class="form_title mb-10">{{error}}</p>
     </v-row>
     <v-row lass="mt-10 d-flex justify-center align-center">
       <v-text-field
@@ -9,7 +12,9 @@
         bg-color="white"
         id="login_reg"
         label="Логин"
+        :rules="rules.login"
         :counter="20"
+        maxLength="20"
         required
       ></v-text-field>
     </v-row>
@@ -18,9 +23,9 @@
         id="password_reg"
         v-model="password"
         bg-color="white"
+        :rules="rules.password"
         :type="show ? 'text':'password'"
         label="Пароль"
-        :counter="8"
         required
       ></v-text-field>
       <v-btn @click="togglePassword" style="font-size: 8px; font-weight: 400; margin-bottom: 20px;"
@@ -38,6 +43,7 @@
         type="submit"
         variant="outlined"
         color="#03914d"
+        @click="auth('registration')"
       >
         Зарегистрироваться
       </v-btn>

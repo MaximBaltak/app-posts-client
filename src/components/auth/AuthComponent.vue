@@ -1,15 +1,20 @@
 <template>
-  <v-form class="form" @click.prevent>
+  <v-form ref="form" class="form" @click.prevent>
     <v-row class="mt-10 d-flex justify-center align-center">
       <h1 class="form_title mb-10">Вход</h1>
+    </v-row>
+    <v-row v-if="error" class="mt-10 mb-10 d-flex justify-center align-center">
+      <p style="font-size: 20px; font-weight: 500; color: red" class="form_title mb-10">{{error}}</p>
     </v-row>
     <v-row lass="mt-10 d-flex justify-center align-center">
       <v-text-field
         v-model="login"
         bg-color="white"
+        :rules="rules.login"
         id="login_auth"
         label="Логин"
         :counter="20"
+        maxLength="20"
         required
       ></v-text-field>
     </v-row>
@@ -17,10 +22,10 @@
       <v-text-field
         id="password_auth"
         v-model="password"
+        :rules="rules.password"
         bg-color="white"
         :type="show ? 'text':'password'"
         label="Пароль"
-        :counter="8"
         required
       ></v-text-field>
       <v-btn @click="togglePassword" style="font-size: 8px; font-weight: 400; margin-bottom: 20px;"
@@ -38,6 +43,7 @@
         type="submit"
         variant="outlined"
         color="#03914d"
+        @click="auth('login')"
       >
         Войти
       </v-btn>
