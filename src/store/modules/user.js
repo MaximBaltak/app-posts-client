@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state: {
     auth: false,
-    user: null
+    user: {}
   },
   actions: {
     async authUser ({ commit }, payload) {
@@ -20,7 +20,16 @@ export default {
       }
     },
     async exit ({ commit }) {
-      await axiosInstance.get('/users/exit')
+      await axiosInstance.get('/users/exit', { withCredentials: true })
+      commit('exitUser')
+    },
+    async remove ({ commit }) {
+      await axiosInstance.delete('/users', { withCredentials: true })
+      commit('exitUser')
+    },
+    async getAuthUser ({ commit }) {
+      const { data } = await axiosInstance.get('/users/get', { withCredentials: true })
+      commit('initUser', data)
     }
   },
   mutations: {

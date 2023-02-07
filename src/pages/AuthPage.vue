@@ -9,9 +9,13 @@
 <script>
 import RegComponent from '@/components/auth/RegComponent'
 import AuthComponent from '@/components/auth/AuthComponent'
+
 export default {
   name: 'AuthPage',
-  components: { AuthComponent, RegComponent },
+  components: {
+    AuthComponent,
+    RegComponent
+  },
   data () {
     return {
       authForm: false
@@ -21,14 +25,18 @@ export default {
     toggleForm () {
       this.authForm = !this.authForm
     }
+  },
+  created () {
+    const typeForm = this.$route.query?.typeForm
+    if (typeForm === 'login') this.authForm = true
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .title{
-    color: #03914d;
-    font-size: 60px;
-    margin-top: 50px;
-  }
+.title {
+  color: #03914d;
+  font-size: 60px;
+  margin-top: 50px;
+}
 </style>

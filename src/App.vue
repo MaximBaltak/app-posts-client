@@ -6,16 +6,20 @@
 
 <script>
 
-import { mapMutations } from 'vuex'
-
+import { mapActions, mapMutations } from 'vuex'
+import cookie from 'browser-cookies'
 export default {
   name: 'App',
   methods: {
     ...mapMutations({
       checkAuth: 'user/checkAuth'
+    }),
+    ...mapActions({
+      getAuthUser: 'user/getAuthUser'
     })
   },
   created () {
+    if (cookie.get('auth')) this.getAuthUser()
     setInterval(() => {
       this.checkAuth()
     }, 500)
