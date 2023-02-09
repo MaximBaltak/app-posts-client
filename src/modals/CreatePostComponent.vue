@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="() =>this.isOpen = true" icon color="#03914d" size="100" class="position-fixed"
+    <v-btn v-if="auth" @click="() =>this.isOpen = true" icon color="#03914d" size="100" class="position-fixed"
            style="top: 85%; left: 30px">
       <v-icon color="white" size="70">mdi-plus</v-icon>
     </v-btn>
@@ -26,8 +26,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'CreatePostComponent',
+  computed: {
+    ...mapState({
+      auth: state => state.user.auth
+    })
+  },
   data () {
     return {
       isOpen: false

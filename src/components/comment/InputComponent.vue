@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'InputCommopent'
+  name: 'InputComponent'
 }
 </script>
 

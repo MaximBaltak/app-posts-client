@@ -45,11 +45,9 @@ export default {
     }),
     async remove () {
       await this.deleteUser()
-      await this.$router.push({ name: 'auth' })
     },
     async exit () {
       await this.exitUser()
-      await this.$router.push({ name: 'auth' })
     },
     toAuthForm () {
       this.$router.push({

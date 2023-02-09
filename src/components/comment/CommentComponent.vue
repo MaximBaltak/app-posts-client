@@ -1,19 +1,37 @@
 <template>
   <div class="comment">
-    <p class="comment_title">Название</p>
-    <p class="comment_body">комментарий 1 1</p>
+    <p class="comment_title">{{comment?.user ? comment?.user?.login: 'Пользователь'}}</p>
+    <p class="comment_body">{{comment?.text}}</p>
     <div class="comment_actions">
       <div class="comment_actions-wrapper">
-        <v-btn variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
-        <p class="comment_actions-counter">1928</p>
+        <v-btn @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
+        <p class="comment_actions-counter">{{comment?.likes}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'CommentComponent'
+  name: 'CommentComponent',
+  props: {
+    comment: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  methods: {
+    ...mapActions({
+      getPosts: 'posts/getPosts',
+      updateComment: 'posts/updateComment'
+    }),
+    async update () {
+      await this.updateComment(this.comment.id)
+      await this.getPosts()
+    }
+  }
 }
 </script>
 
