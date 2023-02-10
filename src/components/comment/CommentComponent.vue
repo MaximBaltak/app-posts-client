@@ -1,26 +1,32 @@
 <template>
   <div class="comment">
-    <p class="comment_title">{{comment?.user ? comment?.user?.login: 'Пользователь'}}</p>
-    <p class="comment_body">{{comment?.text}}</p>
+    <p class="comment_title">{{ comment?.user ? comment?.user?.login : 'Пользователь' }}</p>
+    <p class="comment_body">{{ comment?.text }}</p>
     <div class="comment_actions">
       <div class="comment_actions-wrapper">
         <v-btn @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
-        <p class="comment_actions-counter">{{comment?.likes}}</p>
+        <p class="comment_actions-counter">{{ comment?.likes }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'CommentComponent',
   props: {
     comment: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     }
+  },
+  computed: {
+    ...mapState({
+      auth: state => state.user.auth
+    })
   },
   methods: {
     ...mapActions({
@@ -28,21 +34,31 @@ export default {
       updateComment: 'posts/updateComment'
     }),
     async update () {
-      await this.updateComment(this.comment.id)
-      await this.getPosts()
+      if (!this.auth) {
+        await this.$router.push({
+          name: 'auth',
+          query: {
+            typeForm: 'login'
+          }
+        })
+      } else {
+        await this.updateComment(this.comment.id)
+        await this.getPosts()
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.comment{
+.comment {
   background: white;
   width: 100%;
   min-height: 100px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  &_title{
+
+  &_title {
     width: 100%;
     height: 40px;
     background: rgba(3, 107, 145, 0.1);
@@ -53,7 +69,8 @@ export default {
     font-size: 16px;
     font-weight: 500;
   }
-  &_body{
+
+  &_body {
     color: #002a14;
     font-weight: 300;
     font-size: 14px;
@@ -62,7 +79,8 @@ export default {
     word-break: break-all;
     width: 100%;
   }
-  &_actions{
+
+  &_actions {
     display: flex;
     align-items: center;
     column-gap: 40px;
@@ -71,11 +89,13 @@ export default {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
-  &_actions-wrapper{
+
+  &_actions-wrapper {
     display: flex;
     align-items: center;
   }
-  &_actions-counter{
+
+  &_actions-counter {
     text-align: center;
     margin: 0;
     color: black;

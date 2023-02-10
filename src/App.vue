@@ -1,6 +1,6 @@
 <template>
   <v-app class="position-relative" full-height>
-      <router-view></router-view>
+    <router-view></router-view>
   </v-app>
 </template>
 
@@ -8,6 +8,7 @@
 
 import { mapActions, mapMutations } from 'vuex'
 import cookie from 'browser-cookies'
+
 export default {
   name: 'App',
   methods: {
@@ -15,10 +16,12 @@ export default {
       checkAuth: 'user/checkAuth'
     }),
     ...mapActions({
-      getAuthUser: 'user/getAuthUser'
+      getAuthUser: 'user/getAuthUser',
+      getPosts: 'posts/getPosts'
     })
   },
   created () {
+    this.getPosts()
     if (cookie.get('auth')) this.getAuthUser()
     setInterval(() => {
       this.checkAuth()

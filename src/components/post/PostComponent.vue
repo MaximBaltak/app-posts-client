@@ -9,7 +9,11 @@
           <!--        <v-btn variant="text" color="red" icon="mdi-heart"></v-btn>-->
           <p class="card_actions-counter">{{ post.likes }}</p>
         </div>
-        <div class="card_actions-wrapper">
+        <div v-if="post.showComments" class="card_actions-wrapper">
+          <v-btn @click="showComments(post.id)" variant="text" color="blue" icon="mdi-comment-text-outline"></v-btn>
+          <p class="card_actions-counter">{{ post.comments.length }}</p>
+        </div>
+        <div v-else class="card_actions-wrapper">
           <v-btn @click="showComments(post.id)" variant="text" color="grey" icon="mdi-comment-text-outline"></v-btn>
           <p class="card_actions-counter">{{ post.comments.length }}</p>
         </div>
@@ -19,6 +23,9 @@
       <v-list-item v-for="comment in post.comments" :key="comment.id" width="100%">
         <CommentComponent :comment="comment"/>
       </v-list-item>
+      <p v-if="!post.comments.length" class="w-100 d-flex align-center justify-center"
+         style="font-weight: 500; font-size: 18px; color: gray">
+        Нет комментариев</p>
       <v-list-item v-if="auth" width="100%">
         <InputComponent/>
       </v-list-item>
@@ -58,8 +65,17 @@ export default {
       updatePost: 'posts/updatePost'
     }),
     async update () {
-      await this.updatePost(this.post.id)
-      await this.getPosts()
+      if (!this.auth) {
+        await this.$router.push({
+          name: 'auth',
+          query: {
+            typeForm: 'login'
+          }
+        })
+      } else {
+        await this.updatePost(this.post.id)
+        await this.getPosts()
+      }
     }
   }
 }

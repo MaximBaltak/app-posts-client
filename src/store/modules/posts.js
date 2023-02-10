@@ -3,18 +3,26 @@ import axiosInstance from '@/utils/axios'
 export default {
   namespaced: true,
   state: {
-    posts: {}
+    posts: []
   },
   actions: {
     async getPosts ({
       commit,
       rootState
     }) {
-      const { data } = await axiosInstance.get('/posts', { withCredentials: true })
-      data.forEach(post => {
-        post.showComments = false
-      })
-      commit('initPosts', data)
+      if (!rootState.posts.posts.length) {
+        const { data } = await axiosInstance.get('/posts', { withCredentials: true })
+        data.forEach(post => {
+          post.showComments = false
+        })
+        commit('initPosts', data)
+      } else {
+        const { data } = await axiosInstance.get('/posts', { withCredentials: true })
+        rootState.posts.posts.forEach((post, i) => {
+          data[i].showComments = post.showComments
+        })
+        commit('initPosts', data)
+      }
     },
     async updatePost ({ commit }, postId) {
       await axiosInstance.put(`/posts/${postId}`, null, { withCredentials: true })
@@ -25,7 +33,7 @@ export default {
   },
   mutations: {
     initPosts (state, posts) {
-      state.posts = posts.reverse()
+      state.posts = [...posts]
     },
     showComments (state, postId) {
       state.posts.forEach(post => {
