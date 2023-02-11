@@ -27,6 +27,13 @@ export default {
     async updatePost ({ commit }, postId) {
       await axiosInstance.put(`/posts/${postId}`, null, { withCredentials: true })
     },
+    async createPost ({ commit }, payload) {
+      await axiosInstance.post('/posts/create', payload, { withCredentials: true })
+    },
+    async createComment ({ commit }, payload) {
+      console.log(typeof payload.postId, typeof payload.text)
+      await axiosInstance.post('/comments/create', payload, { withCredentials: true })
+    },
     async updateComment ({ commit }, commentId) {
       await axiosInstance.put(`/comments/${commentId}`, null, { withCredentials: true })
     }

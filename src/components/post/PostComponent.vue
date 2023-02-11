@@ -27,7 +27,7 @@
          style="font-weight: 500; font-size: 18px; color: gray">
         Нет комментариев</p>
       <v-list-item v-if="auth" width="100%">
-        <InputComponent/>
+        <InputComponent :post-id="post.id"/>
       </v-list-item>
     </v-list>
   </div>

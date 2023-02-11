@@ -3,9 +3,7 @@
     <v-btn @click="exit" prepend-icon="mdi-exit-to-app" color="error" variant="flat">
       Выйти
     </v-btn>
-    <v-btn @click="remove" prepend-icon="mdi-trash-can-outline" color="error" variant="flat">
-      удалить профиль
-    </v-btn>
+    <RemoveProfileComponent/>
     <p class="text-center text-color">Добро пожаловать, {{ user.login }}</p>
     <v-toolbar-title class="text-end">
       Лента постов
@@ -26,9 +24,11 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex'
+import RemoveProfileComponent from '@/modals/RemoveProfileComponent'
 
 export default {
   name: 'HeaderComponent',
+  components: { RemoveProfileComponent },
   computed: {
     ...mapState({
       auth: state => state.user.auth,
