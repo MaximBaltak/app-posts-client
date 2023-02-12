@@ -20,9 +20,9 @@ export default {
       getPosts: 'posts/getPosts'
     })
   },
-  created () {
-    this.getPosts()
-    if (cookie.get('auth')) this.getAuthUser()
+  async created () {
+    if (cookie.get('auth')) await this.getAuthUser()
+    await this.getPosts()
     setInterval(() => {
       this.checkAuth()
     }, 500)

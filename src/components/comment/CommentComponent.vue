@@ -4,7 +4,8 @@
     <p class="comment_body">{{ comment?.text }}</p>
     <div class="comment_actions">
       <div class="comment_actions-wrapper">
-        <v-btn @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
+        <v-btn v-if="!comment.isLike" @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
+        <v-btn v-else @click="update" variant="text" color="red" icon="mdi-heart"></v-btn>
         <p class="comment_actions-counter">{{ comment?.likes }}</p>
       </div>
     </div>

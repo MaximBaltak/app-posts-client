@@ -11,13 +11,16 @@ export default {
       rootState
     }) {
       if (!rootState.posts.posts.length) {
-        const { data } = await axiosInstance.get('/posts', { withCredentials: true })
+        const userId = rootState.user?.user?.id || null
+        console.log(userId)
+        const { data } = await axiosInstance.get(`/posts?userId=${+userId}`, { withCredentials: true })
         data.forEach(post => {
           post.showComments = false
         })
         commit('initPosts', data)
       } else {
-        const { data } = await axiosInstance.get('/posts', { withCredentials: true })
+        const userId = rootState.user?.user?.id || null
+        const { data } = await axiosInstance.get(`/posts?userId=${+userId}`, { withCredentials: true })
         rootState.posts.posts.forEach((post, i) => {
           data[i].showComments = post.showComments
         })

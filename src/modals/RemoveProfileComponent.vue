@@ -32,10 +32,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      deleteUser: 'user/remove'
+      deleteUser: 'user/remove',
+      getPosts: 'posts/getPosts'
     }),
     async remove () {
       await this.deleteUser()
+      await this.getPosts()
     }
   }
 }

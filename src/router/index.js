@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/auth'
+    redirect: '/posts'
   },
   {
     path: '/:catchAll(.*)',

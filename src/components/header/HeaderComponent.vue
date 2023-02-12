@@ -41,13 +41,12 @@ export default {
     }),
     ...mapActions({
       exitUser: 'user/exit',
-      deleteUser: 'user/remove'
+      deleteUser: 'user/remove',
+      getPosts: 'posts/getPosts'
     }),
-    async remove () {
-      await this.deleteUser()
-    },
     async exit () {
       await this.exitUser()
+      await this.getPosts()
     },
     toAuthForm () {
       this.$router.push({

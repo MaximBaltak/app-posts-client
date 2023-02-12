@@ -5,8 +5,8 @@
       <p class="card_body">{{ post.text }}</p>
       <div class="card_actions">
         <div class="card_actions-wrapper">
-          <v-btn @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
-          <!--        <v-btn variant="text" color="red" icon="mdi-heart"></v-btn>-->
+          <v-btn v-if="!post.isLike" @click="update" variant="text" color="grey" icon="mdi-heart-outline"></v-btn>
+          <v-btn v-else @click="update" variant="text" color="red" icon="mdi-heart"></v-btn>
           <p class="card_actions-counter">{{ post.likes }}</p>
         </div>
         <div v-if="post.showComments" class="card_actions-wrapper">

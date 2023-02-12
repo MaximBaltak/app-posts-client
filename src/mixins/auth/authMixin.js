@@ -13,7 +13,8 @@ export const authMixin = {
   },
   methods: {
     ...mapActions({
-      authUser: 'user/authUser'
+      authUser: 'user/authUser',
+      getPosts: 'posts/getPosts'
     }),
     ...mapMutations({
       checkAuth: 'user/checkAuth'
@@ -32,6 +33,7 @@ export const authMixin = {
             this.checkAuth()
             this.error = null
             this.$router.push({ name: 'posts' })
+            this.getPosts()
           })
           .catch(e => {
             this.error = e.response?.data?.message
